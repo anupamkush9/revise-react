@@ -1,21 +1,24 @@
 
 function Login(){
+    function display_name(name){
+        alert(`hi ${name}`)
+    }
+
+    function welcome(){
+        alert("Hi")
+    }
+
     return (
-        <h1>Login</h1>
+        <div>
+            <h1>Login</h1>
+
+            <button onClick={()=>display_name("John")}>John</button>
+            <button onClick={()=>display_name("Smith")}>Smith</button>
+            <button onClick={welcome}>welcome</button>
+
+        </div>
         )
 }
 
-
-export function Settings(){
-    return (
-        <h1>Settings</h1>
-        )
-}
-
-export function Profile(){
-    return (
-        <h1>Profile</h1>
-        )
-}
 
 export default Login;
