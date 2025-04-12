@@ -11,9 +11,9 @@ function App() {
     <>
       <Header></Header>
       <h1>Hello World </h1>
-      <Login></Login>
+      {/* <Login></Login>
       <Profile></Profile>
-      <Settings></Settings>
+      <Settings></Settings> */}
     </>
   )
 }
