@@ -1,14 +1,12 @@
 import { useState } from 'react';
 
 function Header(){
-    const [count, setCount] = useState(0);
+    const [display,setDisplay] = useState(true);
     return (
         <div>
-            <h1> Header </h1>
-            <p>You clicked {count} times</p>
-					<button onClick={() => setCount(count + 1)}>
-					Click me
-			</button>
+            <h2>Header </h2>
+            <button onClick={()=>setDisplay(!display)}>toggle button</button>
+            {display ? <h5> toggle text </h5>: null}
         </div>
     )
 }
