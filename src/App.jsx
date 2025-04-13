@@ -1,33 +1,50 @@
-import { useState } from 'react'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
 
 function App() {
-  const [vehicles, setVehicle] = useState([]);
+  const [gender, setGender] = useState("male");
+  const [result, setResult] = useState("pass");
 
-  const handleVehicles = (event) =>{
-    if(event.target.checked){
-      setVehicle([...vehicles, event.target.value])
-    }else{
-      setVehicle([...vehicles.filter((item) => item != event.target.value)])
-    }
+  const handleGender = (event) => {
+    setGender(event.target.value);
+  };
+
+  const handleResult = (event) => {
+    setResult(event.target.value)
   }
-
   return (
-            <>
-              <h1>Hello World </h1>
+    <>
+      <h1>Hello World </h1>
 
-              <input type="checkbox" onChange={handleVehicles} id="bike" name="bike" value="Bike"/>
-              <label htmlFor="bike"> I have a bike</label><br/>
+      <label>
+        <input type="radio" name="gender" onClick={handleGender} value="male" />
+        Male
+      </label>
 
-              <input type="checkbox" onChange={handleVehicles} id="car" name="car" value="Car"/>
-              <label htmlFor="car"> I have a car</label><br/>
+      <label>
+        <input type="radio" name="gender" onClick={handleGender} value="female" />
+        Female
+      </label>
 
-              <input type="checkbox" onChange={handleVehicles} id="boat" name="boat" value="Boat"/>
-              <label htmlFor="boat"> I have a boat</label><br/><br/>
+      <label>
+        <input type="radio" name="gender" onClick={handleGender} value="other" />
+        Other
+      </label>
 
-              <h2>Selected values are {vehicles.toString()}</h2>
-            </>
-         )
+      <h2>Selected Gender is : {gender}</h2>
+
+
+
+
+
+      <select id="result" name="result" onChange={handleResult}>
+        <option value="pass">Pass</option>
+        <option value="fail">Fail</option>
+      </select>
+      <h2>Your Result is : {result}</h2>
+
+    </>
+  );
 }
 
-export default App
+export default App;
