@@ -2,47 +2,56 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
-  const [gender, setGender] = useState("male");
-  const [result, setResult] = useState("pass");
-
-  const handleGender = (event) => {
-    setGender(event.target.value);
-  };
-
-  const handleResult = (event) => {
-    setResult(event.target.value)
-  }
+  const userData = [
+    {
+      name: 'Anil',
+      age: '29',
+      email: "anil@test.com",
+      id: 1
+    },
+    {
+      name: 'sam',
+      age: '34',
+      email: "sam@test.com",
+      id: 2
+    },
+    {
+      name: 'peter',
+      age: '20',
+      email: "peter@test.com",
+      id: 3
+    },
+    {
+      name: 'bruce',
+      age: '50',
+      email: "bruce@test.com",
+      id: 4
+    }
+  ]
   return (
     <>
-      <h1>Hello World </h1>
-
-      <label>
-        <input type="radio" name="gender" onClick={handleGender} value="male" />
-        Male
-      </label>
-
-      <label>
-        <input type="radio" name="gender" onClick={handleGender} value="female" />
-        Female
-      </label>
-
-      <label>
-        <input type="radio" name="gender" onClick={handleGender} value="other" />
-        Other
-      </label>
-
-      <h2>Selected Gender is : {gender}</h2>
-
-
-
-
-
-      <select id="result" name="result" onChange={handleResult}>
-        <option value="pass">Pass</option>
-        <option value="fail">Fail</option>
-      </select>
-      <h2>Your Result is : {result}</h2>
-
+      <table >
+        <thead>
+          <tr>
+            <td>id</td>
+            <td>Name</td>
+            <td>Email</td>
+            <td>age</td>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            userData.map((user) => (
+              <tr>
+                <td>{user.id}</td>
+                <td>{user.name}</td>
+                <td>{user.email}</td>
+                <td>{user.age}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
     </>
   );
 }
