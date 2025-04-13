@@ -1,57 +1,86 @@
 import { useState } from "react";
 import "./App.css";
+import College from "./College"
 
 function App() {
-  const userData = [
+  const collegeData = [
     {
-      name: 'Anil',
-      age: '29',
-      email: "anil@test.com",
-      id: 1
+      name: "IET Alwar",
+      city: "Alwar",
+      website: "www.iet.com",
+      student: [
+        {
+          name: "Anil sidhu",
+          age: '29',
+          email: "anil@test.com"
+        },
+        {
+          name: "Peter",
+          age: '20',
+          email: "peter@test.com"
+        },
+        {
+          name: "Bruce",
+          age: '25',
+          email: "bruce@test.com"
+        }
+      ]
     },
     {
-      name: 'sam',
-      age: '34',
-      email: "sam@test.com",
-      id: 2
+      name: "IIT Delhi",
+      city: "Delhi",
+      website: "www.iit.com",
+      student: [
+        {
+          name: "Anil sidhu",
+          age: '29',
+          email: "anil@test.com"
+        },
+        {
+          name: "Peter",
+          age: '20',
+          email: "peter@test.com"
+        },
+        {
+          name: "Bruce",
+          age: '25',
+          email: "bruce@test.com"
+        }
+      ]
     },
     {
-      name: 'peter',
-      age: '20',
-      email: "peter@test.com",
-      id: 3
-    },
-    {
-      name: 'bruce',
-      age: '50',
-      email: "bruce@test.com",
-      id: 4
+      name: "KCIET Hisar",
+      city: "Hisar",
+      website: "www.kciet.com",
+      student: [
+        {
+          name: "Anil sidhu",
+          age: '29',
+          email: "anil@test.com"
+        },
+        {
+          name: "Peter",
+          age: '20',
+          email: "peter@test.com"
+        },
+        {
+          name: "Bruce",
+          age: '25',
+          email: "bruce@test.com"
+        }
+      ]
     }
   ]
+
   return (
     <>
-      <table >
-        <thead>
-          <tr>
-            <td>id</td>
-            <td>Name</td>
-            <td>Email</td>
-            <td>age</td>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            userData.map((user) => (
-              <tr key={user.id}>
-                <td>{user.id}</td>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>{user.age}</td>
-              </tr>
-            ))
-          }
-        </tbody>
-      </table>
+    {
+      collegeData.map((clg, index)=>(
+        <div key={index}>
+          <College clg={clg}></College>
+        </div>
+      ))
+    }
     </>
   );
 }
