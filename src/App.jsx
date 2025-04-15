@@ -1,88 +1,22 @@
-import { useState } from "react";
-import "./App.css";
-import College from "./College"
-
-function App() {
-  const collegeData = [
-    {
-      name: "IET Alwar",
-      city: "Alwar",
-      website: "www.iet.com",
-      student: [
-        {
-          name: "Anil sidhu",
-          age: '29',
-          email: "anil@test.com"
-        },
-        {
-          name: "Peter",
-          age: '20',
-          email: "peter@test.com"
-        },
-        {
-          name: "Bruce",
-          age: '25',
-          email: "bruce@test.com"
-        }
-      ]
-    },
-    {
-      name: "IIT Delhi",
-      city: "Delhi",
-      website: "www.iit.com",
-      student: [
-        {
-          name: "Anil sidhu",
-          age: '29',
-          email: "anil@test.com"
-        },
-        {
-          name: "Peter",
-          age: '20',
-          email: "peter@test.com"
-        },
-        {
-          name: "Bruce",
-          age: '25',
-          email: "bruce@test.com"
-        }
-      ]
-    },
-    {
-      name: "KCIET Hisar",
-      city: "Hisar",
-      website: "www.kciet.com",
-      student: [
-        {
-          name: "Anil sidhu",
-          age: '29',
-          email: "anil@test.com"
-        },
-        {
-          name: "Peter",
-          age: '20',
-          email: "peter@test.com"
-        },
-        {
-          name: "Bruce",
-          age: '25',
-          email: "bruce@test.com"
-        }
-      ]
-    }
-  ]
-
+function App(){
   return (
-    <>
-    {
-      collegeData.map((clg, index)=>(
-        <div key={index}>
-          <College clg={clg}></College>
-        </div>
-      ))
-    }
-    </>
-  );
+    <div>
+      <h2 style={{color:"red"}}>Inline Style in React JS</h2>
+      <div style={{
+            border: "5px solid green",
+            width: "200px",
+            boxShadow: "5px 5px 5px 5px grey",
+            padding: "5px",
+      }}>
+      <img style={{ width: '200px' }} src="https://www.w3schools.com/howto/img_avatar.png" />
+      <div style={{paddingLeft: '10px'}}>
+        <h5> Anupam </h5>
+        <p> Software Engineer</p>
+      </div>
+      </div>
+
+    </div>
+  )
 }
 
 export default App;
