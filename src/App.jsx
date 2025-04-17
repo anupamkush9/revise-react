@@ -1,74 +1,33 @@
-// import './css/style.css'
-import style from './css/UserProfile.module.css'
-
+import { useRef } from "react"
 function App() {
 
+  const inputRef = useRef(null);
+  const h1Ref = useRef(null);
+  
+  const handlefocus = () => {
+    inputRef.current.focus()
+    inputRef.current.placeholder = "focus came"
+    inputRef.current.style.color = "red"
+    inputRef.current.value = "1233"
+  }
+
+  const handleh1click = () => {
+    if (h1Ref.current.style.color != "blue")
+    {
+      h1Ref.current.style.color = "blue"
+    }else{
+      h1Ref.current.style.color = "black"
+    }
+  }
 
   return (
     <>
-    <h1 className={style.heading}>External Style</h1>
-    <div className={style.wrapContainer}>
-      <div className={style.card}>
-        <div>
-          <img className={style.img} src='https://www.w3schools.com/howto/img_avatar.png' />
-        </div>
-        <div className={style.textWrap}>
-          <h4>Anupam Kushwaha</h4>
-          <p>Software developer</p>
-        </div>
-      </div>
+    <h1>Useref in React </h1>
+    <input ref={inputRef} type="text"></input>
+    <button onClick={handlefocus}>focus on input fields</button>
 
-      <div className={style.card}>
-        <div>
-          <img className={style.img} src='https://www.w3schools.com/howto/img_avatar.png' />
-        </div>
-        <div className={style.textWrap}>
-          <h4>Anupam Kushwaha</h4>
-          <p>Software developer</p>
-        </div>
-      </div>
-
-      <div className={style.card}>
-        <div>
-          <img className={style.img} src='https://www.w3schools.com/howto/img_avatar.png' />
-        </div>
-        <div className={style.textWrap}>
-          <h4>Anupam Kushwaha</h4>
-          <p>Software developer</p>
-        </div>
-      </div>
-
-      <div className={style.card}>
-        <div>
-          <img className={style.img} src='https://www.w3schools.com/howto/img_avatar.png' />
-        </div>
-        <div className={style.textWrap}>
-          <h4>Anupam Kushwaha</h4>
-          <p>Software developer</p>
-        </div>
-      </div>
-
-
-      <div className={style.card}>
-        <div>
-          <img className={style.img} src='https://www.w3schools.com/howto/img_avatar.png' />
-        </div>
-        <div className={style.textWrap}>
-          <h4>Anupam Kushwaha</h4>
-          <p>Software developer</p>
-        </div>
-      </div>
-
-      <div className={style.card}>
-        <div>
-          <img className={style.img} src='https://www.w3schools.com/howto/img_avatar.png' />
-        </div>
-        <div className={style.textWrap}>
-          <h4>Anupam Kushwaha</h4>
-          <p>Software developer</p>
-        </div>
-      </div>
-    </div>
+    <h1 ref={h1Ref}>H1 Heading.........</h1>
+    <button onClick={handleh1click}>Toggle h1 colour</button>
     </>
   )
 }
