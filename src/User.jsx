@@ -1,9 +1,9 @@
 
-function User({pop_up, name, welcome_handler}){
+function User({ref,handle_input_field }){
     return (
         <>
-            <button onClick={()=>pop_up(name)}>display user</button>
-            <button onClick={welcome_handler}>Welcome user</button>
+            <input ref={ref} type="text" />
+            <button onClick={handle_input_field}>handle input field</button>
             <br/>
             <br/>
         </>
