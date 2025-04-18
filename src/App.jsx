@@ -1,42 +1,23 @@
 import { useRef } from "react"
+import User from "./User"
 function App() {
 
-  const nameuseref = useRef("")
-  const passworduseref = useRef("")
-
-  const handleLogin = (event) => {
-    event.preventDefault()
-    const name = document.getElementById("name").value;
-    const password = document.getElementById("password").value;
-    console.log("name.....password.......",name, password)
+  const pop_up = (name)=>{
+    alert(`Hi ${name}`)
   }
 
-  const handleLoginByUseRef = (event) => {
-    event.preventDefault()
-    const name = nameuseref.current.value;
-    const password = passworduseref.current.value;
-    console.log("name.....password.......",name, password)
+  const welcome_message_handler = ()=>{
+    alert("Hi Welcome to that page")
   }
-
 
   return (
     <>
-    <h1> Uncontrolled Component By DOM</h1>
-    <form action="" method="post" onSubmit={handleLogin}>
-      <input type="text" id="name" placeholder="Enter Name"></input>
-      <input type="password" id="password" placeholder="Enter Password"></input>
-      <button>submit</button>
-    </form>
-
-    <hr/>
-    <hr/>
-
-    <h1> Uncontrolled Component By useRef </h1>
-    <form action="" method="post" onSubmit={handleLoginByUseRef}>
-      <input ref={nameuseref} type="text" id="name" placeholder="Enter Name"></input>
-      <input ref={passworduseref} type="password" id="password" placeholder="Enter Password"></input>
-      <button>submit</button>
-    </form>
+    <h1> Pass function as a props</h1>
+    <User pop_up={pop_up} name="Anupam" welcome_handler = {welcome_message_handler}></User>
+    <User pop_up={pop_up} name="Anuj" welcome_handler = {welcome_message_handler}></User>
+    <User pop_up={pop_up} name="Ram" welcome_handler = {welcome_message_handler}></User>
+    <User pop_up={pop_up} name="Shyam" welcome_handler = {welcome_message_handler}></User>
+    <User pop_up={pop_up} name="Rohit" welcome_handler = {welcome_message_handler}></User>
     </>
   )
 }
