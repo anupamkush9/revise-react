@@ -1,9 +1,8 @@
 
-function User({ref,handle_input_field }){
+function User({setUser}){
     return (
         <>
-            <input ref={ref} type="text" />
-            <button onClick={handle_input_field}>handle input field</button>
+            <input onChange={(event)=>(setUser(event.target.value))} type="text" />
             <br/>
             <br/>
         </>
