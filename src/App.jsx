@@ -1,29 +1,43 @@
-import { useState } from "react";
+import { useActionState } from "react";
 
 function App() {
-  const [data,setData]=useState({
-    name:"",
-    address:{
-      city:""
+
+  const handleSubmit = async (prevdata, data)=>{
+    const name = data.get('name')
+    const password = data.get('password')
+    
+    await new Promise(res => setTimeout(res, 2000))
+    console.log("=============>",name,password)
+
+    if (name && password){
+      return {"message":"Form Submitted Successfully.", name, password}
+    }else{
+      return {"error":"Please fill all fields.", name, password}
     }
-  });
-
-  const update_name = (event)=>{
-    data.name = event.target.value;
-    setData({...data})
   }
-
-  const update_city = (event)=>{
-    data.address.city = event.target.value;
-    setData({...data, address:{...data.address}})
-  }
+  const [data, action, pending] = useActionState(handleSubmit, undefined)
   return (
     <div>
-      <h1>Updating object</h1>
-      <h4>Name : {data.name}</h4>
-      <h4>City : {data.address.city}</h4>
-      <input type="text" onChange={update_name} placeholder="Enter your name" />
-      <input type="text" onChange={update_city} placeholder="Enter City name" />
+      <h1>useState hook in react</h1>
+      <form action={action}>
+        <input type="text" name="name" placeholder="Enter Name" />
+        <br/>
+        <br/>
+        <input type="text" name="password" placeholder="Enter Password" />
+        <br/>
+        <br/>
+        <button disabled={pending}>Submit</button>
+      </form>
+        {
+          data?.error  && <span style={{ color: 'red' }}>{data?.error}</span>
+        }
+        { 
+          data?.message  && <span style={{ color: 'green' }}>{data?.message}</span>
+        }
+
+      <h3>Name : {data?.name}</h3>
+      <h3>Password : {data?.password}</h3>
+
     </div>
 
   );
