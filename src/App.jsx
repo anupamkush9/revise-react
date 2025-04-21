@@ -1,45 +1,40 @@
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 
 function App() {
 
-  const handleSubmit = async (prevdata, data)=>{
-    const name = data.get('name')
-    const password = data.get('password')
-    
-    await new Promise(res => setTimeout(res, 2000))
-    console.log("=============>",name,password)
-
-    if (name && password){
-      return {"message":"Form Submitted Successfully.", name, password}
-    }else{
-      return {"error":"Please fill all fields.", name, password}
-    }
+  const [userNames, setuserNames] = useState(["Virat", "hardik"]);
+  const handleLastName = (event) =>{
+    userNames[userNames.length-1] = event.target.value
+    setuserNames([...userNames])
   }
-  const [data, action, pending] = useActionState(handleSubmit, undefined)
+
+  const [dataDetails,setDataDetails]=useState([
+    { name:'anil',age:'29'},
+    { name:'sam',age:'25'},
+    { name:'peter',age:'33'},
+  ])
+
+  const handleAge = (event)=>{
+    dataDetails[dataDetails.length-1].age = event.target.value
+    setDataDetails([...dataDetails])
+  }
   return (
     <div>
-      <h1>useState hook in react</h1>
-      <form action={action}>
-        <input type="text" name="name" placeholder="Enter Name" />
-        <br/>
-        <br/>
-        <input type="text" name="password" placeholder="Enter Password" />
-        <br/>
-        <br/>
-        <button disabled={pending}>Submit</button>
-      </form>
-        {
-          data?.error  && <span style={{ color: 'red' }}>{data?.error}</span>
-        }
-        { 
-          data?.message  && <span style={{ color: 'green' }}>{data?.message}</span>
-        }
-
-      <h3>Name : {data?.name}</h3>
-      <h3>Password : {data?.password}</h3>
+      <h1>Updating Array of string</h1>
+      <input type="text" placeholder="Enter name to change last name" onChange={handleLastName}/>
+      {
+      userNames.map((user_name, index)=>(<h5 key={index}>{user_name}</h5>))
+      }
+    
+    <hr/>
+    <hr/>
+      <h1>Updating Array of objects</h1>
+      <input type="text" placeholder="Enter Age to change last person age" onChange={handleAge}/>
+      {
+      dataDetails.map((data, index)=>(<h5 key={index}>{data?.name} {data?.age}</h5>))
+      }
 
     </div>
-
   );
 }
 
