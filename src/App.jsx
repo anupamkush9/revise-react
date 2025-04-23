@@ -1,29 +1,14 @@
-import useToggle from "./useToggle"
+import useFetch from "./useFetch"
 
 
 function App() {
-  const [value, ToggleValue] = useToggle(true)
-  const [data, setData] = useToggle(true)
+  const  [data, loading] = useFetch("https://jsonplaceholder.typicode.com/todos/1");
+
   return (
-    <div>
-      {
-        value?<h2>Custom hook</h2>:null
-      }
-      <button onClick={()=>ToggleValue(!value)}>Toggle Heading</button>
-      <button onClick={()=>ToggleValue(false)}>Hide</button>
-      <button onClick={()=>ToggleValue(true)}>Display</button>
-      
-      <hr />
-
-      {
-        data?<p>Custom hook</p>:null
-      }
-      <button onClick={()=>setData(!data)}>Toggle Paragraph</button>
-      <button onClick={()=>setData(false)}>Hide</button>
-      <button onClick={()=>setData(true)}>Display</button>
-
-    </div>
+      <div>
+          {loading ? <p>Loading...</p> : <p>Data: {JSON.stringify(data)}</p>}
+      </div>
   )
 }
 
-export default App
+export default App;
