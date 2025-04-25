@@ -1,0 +1,27 @@
+import { Outlet, Link } from "react-router"
+export default function NavLayout(){
+    return (
+        <>
+            <nav>
+                <ul>
+                <li>
+                    <Link to="/">Home</Link>
+                </li>
+                <li>
+                    <Link to="/app">App</Link>
+                </li>
+                <li>
+                    <Link to="/contact">Contact</Link>
+                </li>
+                <li>
+                    <Link to="/about">About</Link>
+                </li>
+                <li>
+                    <Link to="/adsfjkl">Not Available page</Link>
+                </li>            
+                </ul>
+            </nav>
+        <Outlet />
+        </>
+    )
+}
