@@ -15,6 +15,9 @@ export default function NavLayout(){
                 </li>
                 <li>
                     <Link to="/about">About</Link>
+                </li> 
+                <li>
+                    <Link to="/courses">courses</Link>
                 </li>
                 <li>
                     <Link to="/adsfjkl">Not Available page</Link>

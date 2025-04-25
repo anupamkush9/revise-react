@@ -9,6 +9,9 @@ import PageNotFound from './PageNotFound.jsx';
 import NavLayout from './NavLayout.jsx';
 import Home from './Home.jsx'
 import Contact from './Contact.jsx';
+import ListCourse from './ListCourse.jsx';
+import Search from './Search.jsx';
+import Courses from './Courses.jsx';
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -18,6 +21,12 @@ createRoot(document.getElementById('root')).render(
         <Route path="app" element={<App />} />
         <Route path="contact" element={<Contact />} />
         <Route path="about" element={<About />} />
+
+        <Route path="/courses" element={<Courses />} >
+          <Route path="search" element={<Search />} />
+          <Route path="list" element={<ListCourse />} />
+        </Route>
+
         <Route path="*" element={<Navigate to='/' />} />
         {/* <Route path="*" element={<PageNotFound />} /> */}
       </Route>
@@ -25,6 +34,8 @@ createRoot(document.getElementById('root')).render(
   </BrowserRouter>
 )
 
+//  implementation Ref link
+//  https://www.geeksforgeeks.org/implement-nested-routes-in-react-js-react-router-dom-v6/
 
 // or same as above
 
