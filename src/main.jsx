@@ -2,7 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import "./App.css"
 import "./index.css"
-import { BrowserRouter, Routes, Route, Link  } from "react-router";
+import { BrowserRouter, Routes, Route, Link, Navigate  } from "react-router";
 import App from './App.jsx'
 import About from './About.jsx'
 import PageNotFound from './PageNotFound.jsx';
@@ -18,7 +18,8 @@ createRoot(document.getElementById('root')).render(
         <Route path="app" element={<App />} />
         <Route path="contact" element={<Contact />} />
         <Route path="about" element={<About />} />
-        <Route path="*" element={<PageNotFound />} />
+        <Route path="*" element={<Navigate to='/' />} />
+        {/* <Route path="*" element={<PageNotFound />} /> */}
       </Route>
     </Routes>
   </BrowserRouter>
