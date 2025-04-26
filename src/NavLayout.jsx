@@ -1,14 +1,14 @@
-import { Outlet, Link } from "react-router"
+import { Outlet, Link, NavLink } from "react-router"
 export default function NavLayout(){
     return (
         <>
             <nav>
                 <ul>
                 <li>
-                    <Link to="/">Home</Link>
+                    <NavLink to="/">Home</NavLink>
                 </li>
                 <li>
-                    <Link to="/app">App</Link>
+                    <NavLink to="/app">App</NavLink>
                 </li>
                 <li>
                     <Link to="/contact">Contact</Link>
