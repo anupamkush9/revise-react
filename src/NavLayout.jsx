@@ -20,10 +20,15 @@ export default function NavLayout(){
                     <Link to="/courses">courses</Link>
                 </li>
                 <li>
+                    <Link to="/Users">Users</Link>
+                </li>
+                <li>
                     <Link to="/adsfjkl">Not Available page</Link>
                 </li>            
                 </ul>
             </nav>
+            <hr/>
+            <hr/>
         <Outlet />
         </>
     )

@@ -12,6 +12,8 @@ import Contact from './Contact.jsx';
 import ListCourse from './ListCourse.jsx';
 import Search from './Search.jsx';
 import Courses from './Courses.jsx';
+import UserDetail from './UserDetail.jsx';
+import UserList from './UserList.jsx';
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -21,14 +23,16 @@ createRoot(document.getElementById('root')).render(
         <Route path="app" element={<App />} />
         <Route path="contact" element={<Contact />} />
         <Route path="about" element={<About />} />
+        <Route path="/users" element={<UserList />} />
+        <Route path="/users/:id" element={<UserDetail />} />
 
         <Route path="/courses" element={<Courses />} >
           <Route path="search" element={<Search />} />
           <Route path="list" element={<ListCourse />} />
         </Route>
 
-        <Route path="*" element={<Navigate to='/' />} />
-        {/* <Route path="*" element={<PageNotFound />} /> */}
+        {/* <Route path="*" element={<Navigate to='/' />} /> */}
+        <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>
   </BrowserRouter>
