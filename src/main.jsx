@@ -23,8 +23,10 @@ createRoot(document.getElementById('root')).render(
         <Route path="app" element={<App />} />
         <Route path="contact" element={<Contact />} />
         <Route path="about" element={<About />} />
-        <Route path="/users" element={<UserList />} />
         <Route path="/users/:id" element={<UserDetail />} />
+
+        <Route path='/users/list?' element={<UserList />} />
+        <Route path='/users/:id/:name?' element={<UserDetail />} />
 
         <Route path="/courses" element={<Courses />} >
           <Route path="search" element={<Search />} />
