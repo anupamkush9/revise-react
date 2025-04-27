@@ -1,53 +1,33 @@
 import { useState, useEffect } from "react";
+import UserList from "./UserList";
+import AddUser from "./AddUser";
+import { Routes, Route, NavLink } from "react-router";  // <== small correction here also
 
 function App() {
-  const [loading, setLoading] = useState(false);
-  const [userData, setUserData] = useState([]);
-
-  useEffect(() => {
-    fetchUserData();
-  }, []);
-
-  const fetchUserData = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch("http://localhost:8000/users");
-      const data = await response.json();
-      setUserData(data);
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
-    <div className="container mt-4">
-      {loading ? (
-        <div className="text-center">Loading...</div>
-      ) : (
-        <table className="table table-hover table-striped">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Name</th>
-              <th scope="col">Age</th>
-              <th scope="col">Email</th>
-            </tr>
-          </thead>
-          <tbody>
-            {userData.map((user, index) => (
-              <tr key={user.id || index}>
-                <th scope="row">{index + 1}</th>
-                <td>{user.name}</td>
-                <td>{user.age}</td>
-                <td>{user.email}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-    </div>
+
+      <div>        
+        <nav className=" navbar navbar-expand-lg bg-body-tertiary bg-primary">
+          <div className="container-fluid">
+            <NavLink className="navbar-brand" to="/">List Users</NavLink>
+            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span className="navbar-toggler-icon"></span>
+            </button>
+            <div className="collapse navbar-collapse" id="navbarNav">
+              <ul className="navbar-nav">
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/add">Add Users</NavLink>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+        <Routes>
+          <Route path="/" element={<UserList />} />
+          <Route path="/add" element={<AddUser />} />
+        </Routes>
+      </div>
   );
 }
 
