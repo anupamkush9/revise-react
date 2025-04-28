@@ -27,6 +27,18 @@ export default function UserList(){
         navigate("/edituser/"+id)
     }
     
+    const deleteUser= async (id)=>{
+        const response = await fetch("http://localhost:8000/users/"+id+"/", {
+            method:"DELETE"
+        });
+        console.log("resp..........",response)
+        if(response.ok){
+            alert("user Deleted.")
+            fetchUserData();
+        }
+    }
+    
+    
     return (
         <div className="container mt-4">
         {loading ? (
@@ -52,7 +64,7 @@ export default function UserList(){
                     <td>
                         <div className="d-flex gap-2 justify-content-start">
                             <button type="button" onClick={()=>editUser(user.id)} className="btn btn-warning btn-sm">Edit</button>
-                            <button type="button" className="btn btn-danger btn-sm">Delete</button>
+                            <button type="button" onClick={()=>deleteUser(user.id)}  className="btn btn-danger btn-sm">Delete</button>
                         </div>
                     </td>
                 </tr>
