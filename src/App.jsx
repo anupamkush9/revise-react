@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import UserList from "./UserList";
 import AddUser from "./AddUser";
+import EditUser from "./EditUser";
 import { Routes, Route, NavLink } from "react-router";  // <== small correction here also
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Routes>
           <Route path="/" element={<UserList />} />
           <Route path="/add" element={<AddUser />} />
+          <Route path="/edituser/:id" element={<EditUser />} />
         </Routes>
       </div>
   );

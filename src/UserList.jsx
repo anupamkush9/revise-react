@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 
 export default function UserList(){
     const [loading, setLoading] = useState(false);
     const [userData, setUserData] = useState([]);
-  
+    const navigate = useNavigate()
     useEffect(() => {
         fetchUserData();
     }, []);
@@ -21,6 +22,11 @@ export default function UserList(){
         }
     };
 
+
+    const editUser=(id)=>{
+        navigate("/edituser/"+id)
+    }
+    
     return (
         <div className="container mt-4">
         {loading ? (
@@ -33,6 +39,7 @@ export default function UserList(){
                 <th scope="col">Name</th>
                 <th scope="col">Age</th>
                 <th scope="col">Email</th>
+                <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -42,6 +49,12 @@ export default function UserList(){
                     <td>{user.name}</td>
                     <td>{user.age}</td>
                     <td>{user.email}</td>
+                    <td>
+                        <div className="d-flex gap-2 justify-content-start">
+                            <button type="button" onClick={()=>editUser(user.id)} className="btn btn-warning btn-sm">Edit</button>
+                            <button type="button" className="btn btn-danger btn-sm">Delete</button>
+                        </div>
+                    </td>
                 </tr>
                 ))}
             </tbody>
