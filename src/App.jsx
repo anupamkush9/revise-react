@@ -1,67 +1,52 @@
 
-import { Fragment } from "react";
-
+import { useState } from 'react';
 function App() {
 
-  return (
-    <>
-      <h2>Fragment in React Js</h2>
-      <table>
-        <thead>
-          <tr>
-            <td>Roll No</td>
-            <td>Name</td>
-            <td>marks</td>
-          </tr>
-        </thead>
+const [name,setName]=useState('');
+const [nameErr,setNameErr]=useState(); 
 
-        <tbody>
-          <TableBody></TableBody>
-          <TableBodyShort/>
-        </tbody>
-      </table>
-    </>
-  )
+const [password,setPassword]=useState('');
+const [passErr,setPassErr]=useState(); 
+
+const handleName=(event)=>{
+  setName(event.target.value)
+  if(name.length>5){
+    setNameErr("Please enter valid username. only 5 characters allowed ")
+  }else{
+    setNameErr()
+  }
+  
 }
 
-function TableBody() {
-  const fragment_rows = [
-    [1, 'Anupam', 92],
-    [2, 'Raj', 85],
-    [3, 'Vikram', 78]
-  ];
+const handlePassword=(event)=>{
+  let regex= /^[A-Z0-9]+$/i;
+  setPassword(event.target.value)
+  if(regex.test(password)){
+    setPassErr()
+  }else{
+    setPassErr("Please enter valid password. only numbers and alphabets allowed ")
+  }
+  
+}
 
   return (
-    <Fragment>
-      {fragment_rows.map((row, rowIndex) => (
-        <tr key={rowIndex}>
-          {row.map((cell, cellIndex) => (
-            <td key={cellIndex}>{cell}</td>
-          ))}
-        </tr>
-      ))}
-    </Fragment>
+    <div>
+      <input className={nameErr?'error':''} type="text" onChange={handleName} placeholder='enter name ' />
+      <span className='red-color'>{nameErr && nameErr}</span>
+      <span className='red-color'>{nameErr ? nameErr : ""}</span>
+      {/* the && operator is being used for conditional rendering  */}
+      <br /><br />
+      <input className={passErr?'error':''} type="text" placeholder='enter password' onChange={handlePassword} />
+      <span className='red-color'>{passErr && passErr}</span>
+      <span className='red-color'>{passErr ? passErr : ""}</span>
+      {/* the && operator is being used for conditional rendering  */}
+      <br /><br />
+      <button disabled={passErr || nameErr} >Login</button>
+
+    </div>
+
   );
 }
 
-function TableBodyShort() {
-  const rows = [
-    [4, 'Virat', 88],
-    [5, 'Abhishek', 65],
-    [6, 'Hardik', 78]
-  ];
+export default App;
 
-  return (
-    <>
-      {rows.map((row, rowIndex) => (
-        <tr key={rowIndex}>
-          {row.map((cell, cellIndex) => (
-            <td key={cellIndex}>{cell}</td>
-          ))}
-        </tr>
-      ))}
-    </>
-  );
-}
-
-export default App
