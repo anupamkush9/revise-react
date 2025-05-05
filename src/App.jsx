@@ -1,53 +1,101 @@
-import { useState, useEffect } from "react";
+import { useReducer } from "react";
+const userdata = {first_name:"",
+  last_name:"",
+  age:0,
+  email:"",
+  submitted:false
+}
+
+const reduce = (prev_data, action) => {
+  switch (action.type) {
+    case "first_name":
+      return { ...prev_data, first_name: action.val };
+    case "last_name":
+      return { ...prev_data, last_name: action.val };
+    case "age":
+      return { ...prev_data, age: action.val };
+    case "email":
+      return { ...prev_data, email: action.val };
+    case 'submit':
+        return { ...prev_data, submitted: true };
+    default:
+      return { ...prev_data };
+  }
+};
 
 function App() {
-  const [loading, setLoading] = useState(false);
-  const [userData, setUserData] = useState([]);
 
-  useEffect(() => {
-    fetchUserData();
-  }, []);
+  const [data, dispatch] = useReducer(reduce, userdata)
 
-  const fetchUserData = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch("http://localhost:8000/users");
-      const data = await response.json();
-      setUserData(data);
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-    } finally {
-      setLoading(false);
-    }
+  const handleSubmit = () => {
+      dispatch({ type: 'submit' });
   };
 
   return (
-    <div className="container mt-4">
-      {loading ? (
-        <div className="text-center">Loading...</div>
-      ) : (
-        <table className="table table-hover table-striped">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Name</th>
-              <th scope="col">Age</th>
-              <th scope="col">Email</th>
-            </tr>
-          </thead>
-          <tbody>
-            {userData.map((user, index) => (
-              <tr key={user.id || index}>
-                <th scope="row">{index + 1}</th>
-                <td>{user.name}</td>
-                <td>{user.age}</td>
-                <td>{user.email}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-    </div>
+      <div className="container mt-5">
+        <form>
+          <div className="mb-3">
+            <label className="form-label">First Name</label>
+            <input
+              type="text"
+              className="form-control"
+              name="first_name"
+              value={data.first_name}
+              onChange={(e)=>(dispatch({"val": e.target.value, "type":"first_name"}))}
+              placeholder="Enter First Name"
+              required
+            />
+          </div>
+
+          <div className="mb-3">
+            <label className="form-label">Last Name</label>
+            <input
+              type="text"
+              className="form-control"
+              name="last_name"
+              value={data.last_name}
+              onChange={(e)=>(dispatch({"val": e.target.value, "type":"last_name"}))}
+              placeholder="Enter Last Name"
+              required
+            />
+          </div>
+
+          <div className="mb-3">
+            <label className="form-label">Age</label>
+            <input
+              type="number"
+              className="form-control"
+              name="age"
+              value={data.age}
+              onChange={(e)=>(dispatch({"val": e.target.value, "type":"age"}))}
+              placeholder="Enter Age"
+              required
+            />
+          </div>
+
+          <div className="mb-3">
+            <label className="form-label">Email ID</label>
+            <input
+              type="email"
+              className="form-control"
+              name="email"
+              value={data.email}
+              onChange={(e)=>(dispatch({"val": e.target.value, "type":"email"}))}
+              placeholder="Enter Email"
+              required
+            />
+          </div>
+          <button className="btn btn-success" onClick={handleSubmit}>Submit</button>
+          {data.submitted && <p>Form Submitted!</p>}
+          <br />
+          <br />
+
+          <h5>First Name : {data.first_name}</h5>
+          <h5>Last Name : {data.last_name}</h5>
+          <h5>Age : {data.age}</h5>
+          <h5>Email : {data.email}</h5>
+        </form>
+      </div>
   );
 }
 
