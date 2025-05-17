@@ -1,6 +1,5 @@
 
 import { useState } from "react";
-import style from "./css/rating_star.module.css"
 
 function App() {
   const current_time = new Date().toLocaleTimeString()
