@@ -3,23 +3,23 @@ import { useState } from "react";
 import style from "./css/rating_star.module.css"
 
 function App() {
-  let stars = [0, 0, 0, 0, 0]
-  const [rating, SetRating] = useState(0)
-  const [hover, SetHover] = useState(0)
-  console.log("hover===>>",hover)
+  const current_time = new Date().toLocaleTimeString()
+  const [time, SetTime] = useState(current_time)
+
+  setInterval(() => {
+    const time = new Date().toLocaleTimeString()
+    SetTime(time)
+  }, 1000);
+
   return (
     <div className="d-flex justify-content-center align-items-center vh-100">
-      {
-        stars.map((ele, index) => (
-          <span  className={index < rating || index < hover ? style.star : style.unstar}
-                 key={index} onClick={() => SetRating(index + 1)}
-                 onMouseEnter={()=>SetHover(index+1)}
-                 onMouseLeave={()=>SetHover(index)}>
-                  &#9733;</span>
-        ))
-      }
+        <div>
+          <h3 className="text-primary">Digital Clock</h3>
+          <h3>{time}</h3>
+        </div>
     </div>
   )
 }
 
 export default App
+const now = new Date();
