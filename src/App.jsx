@@ -1,24 +1,35 @@
-
-import { useState } from "react";
+import { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router';
+import Navbar from './components/Navbar.jsx';
+import Login from './components/Login.jsx';
+import Signup from './components/Signup.jsx';
+import Home from './components/Home.jsx';
 
 function App() {
-  const current_time = new Date().toLocaleTimeString()
-  const [time, SetTime] = useState(current_time)
-
-  setInterval(() => {
-    const time = new Date().toLocaleTimeString()
-    SetTime(time)
-  }, 1000);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   return (
-    <div className="d-flex justify-content-center align-items-center vh-100">
-        <div>
-          <h3 className="text-primary">Digital Clock</h3>
-          <h3>{time}</h3>
-        </div>
-    </div>
-  )
+    <BrowserRouter>
+      <Navbar isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
+      <div className="container mt-5">
+        <Routes>
+          <Route path="/" element={
+            isAuthenticated ? <Home /> : <Navigate to="/login" replace />
+          } />
+          <Route path="/login" element={
+            !isAuthenticated 
+              ? <Login setIsAuthenticated={setIsAuthenticated} /> 
+              : <Navigate to="/" replace />
+          } />
+          <Route path="/signup" element={
+            !isAuthenticated 
+              ? <Signup /> 
+              : <Navigate to="/" replace />
+          } />
+        </Routes>
+      </div>
+    </BrowserRouter>
+  );
 }
 
-export default App
-const now = new Date();
+export default App;
