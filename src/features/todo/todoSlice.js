@@ -2,7 +2,7 @@ import {createSlice, nanoid } from '@reduxjs/toolkit';
 
 const initialState = {
     todos: []   // we have to take this 'todos' variable at the time of accessing in useSelectore
-                //   const todos = useSelector((state) => state.todos)
+                //   const todos = useSelector((state) => state.todos.todos)
 }
 
 export const todoSlice = createSlice({

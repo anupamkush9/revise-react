@@ -3,7 +3,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { removeTodo } from '../features/todo/todoSlice'
 
 function Todos() {
-  const todos = useSelector((state) => state.todos)
+  const todos = useSelector((state) => state.todos.todos)
+  // first todos is for accessing it from store.js and 2nd is for accessing it from todoSlice.js
   const dispatch = useDispatch()
 
   return (
