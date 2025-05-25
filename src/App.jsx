@@ -1,24 +1,16 @@
-
-import { useState } from "react";
+import './App.css'
+import AddTodo from './components/AddTodo'
+import Todos from './components/Todos'
 
 function App() {
-  const current_time = new Date().toLocaleTimeString()
-  const [time, SetTime] = useState(current_time)
-
-  setInterval(() => {
-    const time = new Date().toLocaleTimeString()
-    SetTime(time)
-  }, 1000);
-
+  
   return (
-    <div className="d-flex justify-content-center align-items-center vh-100">
-        <div>
-          <h3 className="text-primary">Digital Clock</h3>
-          <h3>{time}</h3>
-        </div>
-    </div>
+    <>
+      <h1>Learn about redux toolkit</h1>
+      <AddTodo />
+      <Todos />
+    </>
   )
 }
 
 export default App
-const now = new Date();
