@@ -1,27 +1,35 @@
-import {createSlice, nanoid } from '@reduxjs/toolkit';
+import {createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+
+
+export const fetchTodos = createAsyncThunk("fetchTodos", async () => {
+  const response = await fetch("https://jsonplaceholder.typicode.com/todos");
+  const json_resp = await response.json();
+  console.log("----------------_>",json_resp)
+  return json_resp
+});
 
 const initialState = {
-    todos: []   // we have to take this 'todos' variable at the time of accessing in useSelectore
-                //   const todos = useSelector((state) => state.todos.todos)
-}
+    isLoading: false,
+    data: null,
+    isError: false,
+  }
 
 export const todoSlice = createSlice({
     name: 'todo',
     initialState,
-    reducers: {
-        addTodo: (state, action) => {
-            const todo = {
-                id: nanoid(), 
-                text: action.payload
-            }
-            state.todos.push(todo)
-        },
-        removeTodo: (state, action) => {
-            state.todos = state.todos.filter((todo) => todo.id !== action.payload )
-        },
-    }
+    extraReducers: (builder) => {
+        builder.addCase(fetchTodos.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(fetchTodos.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.data = action.payload;
+        });
+        builder.addCase(fetchTodos.rejected, (state, action) => {
+            console.log("Error", action.payload);
+            state.isError = true;
+        });
+    },
 })
-
-export const {addTodo, removeTodo} = todoSlice.actions
 
 export default todoSlice.reducer
