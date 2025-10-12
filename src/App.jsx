@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import Login from './components/Login';
 import ProtectedRoute from './components/ProtectedRoute';
 import './App.css';
-import Profile from './components/Profile';
+import Home from './components/Home';
 import Navbar from './components/Navbar';
 import Signup from './components/Signup'; // new component
 
@@ -27,7 +27,7 @@ function AppContent() {
           path="/" 
           element={
             <ProtectedRoute>
-              <Profile />
+              <Home />
             </ProtectedRoute>
           } 
         />

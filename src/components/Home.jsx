@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import api from "./api";
 
-function Profile() {
+function Home() {
   const [data, setData] = useState(null);
 
   useEffect(() => {
@@ -16,8 +16,6 @@ function Profile() {
     };
     fetchProfile();
   }, []);
-
-
 
   if (!data) return <p>Loading...</p>;
 
@@ -54,4 +52,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default Home;
