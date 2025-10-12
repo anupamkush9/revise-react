@@ -5,11 +5,43 @@ import api from "./api";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const validateClient = () => {
+    const err = {};
+    const e = (email || "").trim();
+    if (!e) {
+      err.email = "Email is required.";
+    } else {
+      const emailRegex = /^\S+@\S+\.\S+$/;
+      if (!emailRegex.test(e)) err.email = "Enter a valid email address.";
+    }
+
+    if (!password) {
+      err.password = "Password is required.";
+    } else if (password.length < 8) {
+      err.password = "Password must be at least 8 characters.";
+    }
+    return err;
+  };
+
+  const handleBlur = (e) => {
+    const v = validateClient();
+    const key = e.target.id; // 'email' or 'password'
+    setErrors((prev) => ({ ...prev, [key]: v[key] }));
+  };
+
   const handleLogin = async (e) => {
     e.preventDefault();
+    setErrors({});
+    const clientErr = validateClient();
+    if (Object.keys(clientErr).length) {
+      setErrors(clientErr);
+      return;
+    }
+
     setLoading(true);
     try {
       const response = await api.post("/api/token/", { email, password });
@@ -17,7 +49,7 @@ function Login() {
       localStorage.setItem("refresh_token", response.data.refresh_token);
       navigate("/");
     } catch (error) {
-      alert("Invalid credentials");
+      setErrors({ non_field_errors: "Invalid credentials" });
     } finally {
       setLoading(false);
     }
@@ -59,18 +91,22 @@ function Login() {
                 </div>
               </div>
 
+              {errors.non_field_errors && <div className="alert alert-danger">{errors.non_field_errors}</div>}
+
               <form onSubmit={handleLogin}>
                 <div className="mb-3">
                   <label htmlFor="email" className="form-label fw-semibold text-start d-block">Email</label>
                   <input
                     type="email"
                     id="email"
-                    className="form-control form-control-lg"
+                    className={`form-control form-control-lg ${errors.email ? "is-invalid" : ""}`}
                     placeholder="name@example.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    onBlur={handleBlur}
                     required
                   />
+                  {errors.email && <div className="invalid-feedback">{errors.email}</div>}
                 </div>
 
                 <div className="mb-3">
@@ -78,12 +114,14 @@ function Login() {
                   <input
                     type="password"
                     id="password"
-                    className="form-control form-control-lg"
+                    className={`form-control form-control-lg ${errors.password ? "is-invalid" : ""}`}
                     placeholder="••••••••"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    onBlur={handleBlur}
                     required
                   />
+                  {errors.password && <div className="invalid-feedback">{errors.password}</div>}
                 </div>
 
                 <div className="d-flex justify-content-between align-items-center mb-3">
@@ -114,6 +152,5 @@ function Login() {
     </div>
   );
 }
-
 
 export default Login;
