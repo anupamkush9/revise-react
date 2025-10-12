@@ -1,14 +1,27 @@
-import { Link, useNavigate } from "react-router"; // ✅ useNavigate for redirect
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router";
 
 function Navbar() {
   const navigate = useNavigate();
+  const [isAuth, setIsAuth] = useState(Boolean(localStorage.getItem("access_token")));
+
+  useEffect(() => {
+    const onStorage = (e) => {
+      if (e.key === "access_token" || e.key === "refresh_token") {
+        setIsAuth(Boolean(localStorage.getItem("access_token")));
+      }
+    };
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
+  }, []);
 
   const handleLogout = () => {
     // Remove tokens from localStorage
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
 
-    // Redirect to login page
+    // update local state and redirect to login page
+    setIsAuth(false);
     navigate("/login");
   };
 
@@ -21,9 +34,11 @@ function Navbar() {
             <li className="nav-item">
               <Link className="nav-link" to="/">Home</Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/login">Login</Link>
-            </li>
+            {!isAuth && (
+              <li className="nav-item">
+                <Link className="nav-link" to="/login">Login</Link>
+              </li>
+            )}
           </ul>
           <button className="btn btn-outline-danger" type="button" onClick={handleLogout}>
             Logout
