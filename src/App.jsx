@@ -1,10 +1,10 @@
-// App.js
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router';
 import Login from './components/Login';
 import ProtectedRoute from './components/ProtectedRoute';
 import './App.css';
 import Profile from './components/Profile';
 import Navbar from './components/Navbar';
+import Signup from './components/Signup'; // new component
 
 function App() {
   return (
@@ -19,9 +19,10 @@ function AppContent() {
 
   return (
     <div className="App">
-      {location.pathname !== '/login' && <Navbar />}
+      {location.pathname !== '/login' && location.pathname !== '/signup' && <Navbar />}
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
         <Route 
           path="/" 
           element={

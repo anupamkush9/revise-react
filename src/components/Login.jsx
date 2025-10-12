@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router"; // ✅ corrected import
+import { useNavigate, Link } from "react-router"; // ✅ corrected import
 import api from "./api";
 
 function Login() {
@@ -93,9 +93,9 @@ function Login() {
         <div className="text-center mt-4">
           <p className="text-muted mb-0">
             Don’t have an account?{" "}
-            <a href="/register" className="text-primary fw-semibold text-decoration-none">
+            <Link to="/signup" className="text-primary fw-semibold text-decoration-none">
               Create one
-            </a>
+            </Link>
           </p>
         </div>
       </div>
