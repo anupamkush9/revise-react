@@ -26,14 +26,40 @@ function Signup() {
     boxShadow: "inset 0 1px 3px rgba(0,0,0,0.04)",
   };
 
+  // full form validation - returns an object with field errors
   const validateClient = () => {
     const err = {};
-    if (!form.email.trim()) err.email = "Email is required.";
-    if (!form.password1) err.password1 = "Password is required.";
-    if (form.password1 && form.password2 && form.password1 !== form.password2) {
+    const email = (form.email || "").trim();
+    const password1 = form.password1 || "";
+    const password2 = form.password2 || "";
+
+    if (!email) {
+      err.email = "Email is required.";
+    } else {
+      const emailRegex = /^\S+@\S+\.\S+$/;
+      if (!emailRegex.test(email)) err.email = "Enter a valid email address.";
+    }
+
+    if (!password1) {
+      err.password1 = "Password is required.";
+    } else if (password1.length < 8) {
+      err.password1 = "Password must be at least 8 characters.";
+    }
+
+    if (!password2) {
+      err.password2 = "Please confirm your password.";
+    } else if (password1 !== password2) {
       err.password2 = "Passwords do not match.";
     }
+
     return err;
+  };
+
+  // validate a single field on blur for better UX
+  const handleBlur = (e) => {
+    const partial = validateClient();
+    // keep existing errors but update with new ones
+    setErrors((prev) => ({ ...prev, [e.target.name]: partial[e.target.name] }));
   };
 
   const handleSubmit = async (e) => {
@@ -42,6 +68,7 @@ function Signup() {
     const clientErr = validateClient();
     if (Object.keys(clientErr).length) {
       setErrors(clientErr);
+      console.log("clientErr", clientErr);
       return;
     }
 
@@ -118,6 +145,7 @@ function Signup() {
                     className={`form-control ${errors.email ? "is-invalid" : ""}`}
                     value={form.email}
                     onChange={handleChange}
+                    onBlur={handleBlur}
                     style={uniformInputStyle}
                     placeholder="name@example.com"
                   />
@@ -143,6 +171,7 @@ function Signup() {
                     className={`form-control ${errors.password1 ? "is-invalid" : ""}`}
                     value={form.password1}
                     onChange={handleChange}
+                    onBlur={handleBlur}
                     style={uniformInputStyle}
                     placeholder="Enter a strong password"
                   />
@@ -157,6 +186,7 @@ function Signup() {
                     className={`form-control ${errors.password2 ? "is-invalid" : ""}`}
                     value={form.password2}
                     onChange={handleChange}
+                    onBlur={handleBlur}
                     style={uniformInputStyle}
                     placeholder="Repeat your password"
                   />
