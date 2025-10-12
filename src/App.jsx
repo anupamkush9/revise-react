@@ -1,30 +1,37 @@
 // App.js
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router';
 import Login from './components/Login';
 import ProtectedRoute from './components/ProtectedRoute';
 import './App.css';
 import Profile from './components/Profile';
-import Navbar from './components/Navbar'; // add this import
+import Navbar from './components/Navbar';
 
 function App() {
   return (
-      <Router>
-        <div className="App">
-          <Navbar /> {/* add this line */}
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route 
-              path="/" 
-              element={
-                <ProtectedRoute>
-                  <Profile />
-                </ProtectedRoute>
-              } 
-            />
-          </Routes>
-        </div>
-      </Router>
+    <Router>
+      <AppContent />
+    </Router>
+  );
+}
+
+function AppContent() {
+  const location = useLocation();
+
+  return (
+    <div className="App">
+      {location.pathname !== '/login' && <Navbar />}
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route 
+          path="/" 
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          } 
+        />
+      </Routes>
+    </div>
   );
 }
 
