@@ -1,32 +1,37 @@
-// App.js
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider } from './contexts/AuthContext';
-import Login from './Login';
-import ProtectedRoute from './components/ProtectedRoute';
-import './App.css';
-import Profile from './Profile';
+import { Link, useNavigate } from "react-router"; // ✅ useNavigate for redirect
 
-function App() {
+function Navbar() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Remove tokens from localStorage
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+
+    // Redirect to login page
+    navigate("/login");
+  };
+
   return (
-    <AuthProvider>
-      <Router>
-        <div className="App">
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route 
-              path="/" 
-              element={
-                <ProtectedRoute>
-                  <Profile />
-                </ProtectedRoute>
-              } 
-            />
-          </Routes>
+    <nav className="navbar navbar-expand-lg navbar-light bg-light mb-4">
+      <div className="container-fluid">
+        <Link className="navbar-brand" to="/">My Blog</Link>
+        <div className="collapse navbar-collapse">
+          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            <li className="nav-item">
+              <Link className="nav-link" to="/">Home</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/login">Login</Link>
+            </li>
+          </ul>
+          <button className="btn btn-outline-danger" type="button" onClick={handleLogout}>
+            Logout
+          </button>
         </div>
-      </Router>
-    </AuthProvider>
+      </div>
+    </nav>
   );
 }
 
-export default App;
+export default Navbar;
