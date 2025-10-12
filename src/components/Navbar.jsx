@@ -1,13 +1,15 @@
 // App.js
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router';
-import Login from './components/Login';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
+import Login from './Login';
 import ProtectedRoute from './components/ProtectedRoute';
 import './App.css';
-import Profile from './components/Profile';
+import Profile from './Profile';
 
 function App() {
   return (
+    <AuthProvider>
       <Router>
         <div className="App">
           <Routes>
@@ -23,6 +25,7 @@ function App() {
           </Routes>
         </div>
       </Router>
+    </AuthProvider>
   );
 }
 
