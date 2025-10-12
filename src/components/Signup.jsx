@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router"; // ✅ corrected import
+import { useNavigate, Link } from "react-router";
 import api from "./api";
 
 function Signup() {
@@ -16,6 +16,14 @@ function Signup() {
 
   const handleChange = (e) => {
     setForm((s) => ({ ...s, [e.target.name]: e.target.value }));
+  };
+
+  // uniform input style used across the form for consistent look
+  const uniformInputStyle = {
+    borderRadius: 12,
+    height: 52,
+    padding: "0.625rem 1rem",
+    boxShadow: "inset 0 1px 3px rgba(0,0,0,0.04)",
   };
 
   const validateClient = () => {
@@ -48,14 +56,12 @@ function Signup() {
       };
       const resp = await api.post("/api/signup/", payload);
       if (resp.status === 201) {
-        // registration success -> go to login
         navigate("/login");
       } else {
         setErrors({ non_field_errors: "Unexpected response" });
       }
     } catch (err) {
       if (err.response && err.response.data) {
-        // API validation errors expected as an object
         setErrors(err.response.data);
       } else {
         setErrors({ non_field_errors: "Network or server error" });
@@ -66,62 +72,113 @@ function Signup() {
   };
 
   return (
-    <div className="container" style={{ maxWidth: 600, marginTop: 24 }}>
-      <h2>Sign Up</h2>
-      {errors.non_field_errors && (
-        <div className="alert alert-danger">{errors.non_field_errors}</div>
-      )}
-      <form onSubmit={handleSubmit} noValidate>
-        <div className="mb-3">
-          <label className="form-label">Email</label>
-          <input
-            name="email"
-            type="email"
-            className={`form-control ${errors.email ? "is-invalid" : ""}`}
-            value={form.email}
-            onChange={handleChange}
-          />
-          {errors.email && <div className="invalid-feedback">{errors.email}</div>}
-        </div>
+    <div className="container-fluid min-vh-100 d-flex align-items-center justify-content-center bg-light">
+      <div className="card shadow-lg rounded-4 overflow-hidden" style={{ maxWidth: 980, width: "94%" }}>
+        <div className="row g-0">
+          <div className="col-md-5 d-none d-md-flex align-items-center justify-content-center" style={{ background: "linear-gradient(135deg,#0d6efd,#6610f2)", color: "#fff" }}>
+            <div className="text-center p-4">
+              <h2 className="fw-bold">Create Account</h2>
+              <p className="mb-0">Join to publish and manage your blogs.</p>
+            </div>
+          </div>
 
-        <div className="mb-3">
-          <label className="form-label">Password</label>
-          <input
-            name="password1"
-            type="password"
-            className={`form-control ${errors.password1 ? "is-invalid" : ""}`}
-            value={form.password1}
-            onChange={handleChange}
-          />
-          {errors.password1 && <div className="invalid-feedback">{errors.password1}</div>}
-        </div>
+          <div className="col-md-7">
+            <div className="p-5">
+              <div className="mb-4">
+                <div className="d-flex align-items-center mb-2">
+                  <div
+                    style={{
+                      width: 48,
+                      height: 48,
+                      background: "#eef2ff",
+                      borderRadius: 8,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      marginRight: 12,
+                    }}
+                  >
+                    <span style={{ color: "#0d6efd", fontWeight: 700 }}>SB</span>
+                  </div>
+                  <div>
+                    <h3 className="fw-bold text-primary mb-0">Sign Up</h3>
+                    <small className="text-muted">Create your account</small>
+                  </div>
+                </div>
+              </div>
 
-        <div className="mb-3">
-          <label className="form-label">Confirm Password</label>
-          <input
-            name="password2"
-            type="password"
-            className={`form-control ${errors.password2 ? "is-invalid" : ""}`}
-            value={form.password2}
-            onChange={handleChange}
-          />
-          {errors.password2 && <div className="invalid-feedback">{errors.password2}</div>}
-        </div>
+              {errors.non_field_errors && <div className="alert alert-danger">{errors.non_field_errors}</div>}
 
-        <div className="mb-3">
-          <label className="form-label">First Name</label>
-          <input name="first_name" className="form-control" value={form.first_name} onChange={handleChange} />
-        </div>
+              <form onSubmit={handleSubmit} noValidate>
+                <div className="mb-3">
+                  <label className="form-label fw-semibold text-start d-block">Email</label>
+                  <input
+                    name="email"
+                    type="email"
+                    className={`form-control ${errors.email ? "is-invalid" : ""}`}
+                    value={form.email}
+                    onChange={handleChange}
+                    style={uniformInputStyle}
+                    placeholder="name@example.com"
+                  />
+                  {errors.email && <div className="invalid-feedback">{errors.email}</div>}
+                </div>
 
-        <div className="mb-3">
-          <label className="form-label">Last Name</label>
-          <input name="last_name" className="form-control" value={form.last_name} onChange={handleChange} />
-        </div>
+                <div className="row">
+                  <div className="col-md-6 mb-3">
+                    <label className="form-label fw-semibold text-start d-block">First Name</label>
+                    <input name="first_name" className="form-control" value={form.first_name} onChange={handleChange} style={uniformInputStyle} />
+                  </div>
+                  <div className="col-md-6 mb-3">
+                    <label className="form-label fw-semibold text-start d-block">Last Name</label>
+                    <input name="last_name" className="form-control" value={form.last_name} onChange={handleChange} style={uniformInputStyle} />
+                  </div>
+                </div>
 
-        <button className="btn btn-primary" type="submit" disabled={submitting}>
-          {submitting ? "Signing up..." : "Sign Up"}
-        </button>
-      </form>
+                <div className="mb-3">
+                  <label className="form-label fw-semibold text-start d-block">Password</label>
+                  <input
+                    name="password1"
+                    type="password"
+                    className={`form-control ${errors.password1 ? "is-invalid" : ""}`}
+                    value={form.password1}
+                    onChange={handleChange}
+                    style={uniformInputStyle}
+                    placeholder="Enter a strong password"
+                  />
+                  {errors.password1 && <div className="invalid-feedback">{errors.password1}</div>}
+                </div>
+
+                <div className="mb-3">
+                  <label className="form-label fw-semibold text-start d-block">Confirm Password</label>
+                  <input
+                    name="password2"
+                    type="password"
+                    className={`form-control ${errors.password2 ? "is-invalid" : ""}`}
+                    value={form.password2}
+                    onChange={handleChange}
+                    style={uniformInputStyle}
+                    placeholder="Repeat your password"
+                  />
+                  {errors.password2 && <div className="invalid-feedback">{errors.password2}</div>}
+                </div>
+
+                <button className="btn btn-primary w-100 mb-3" type="submit" disabled={submitting}>
+                  {submitting ? "Signing up..." : "Create account"}
+                </button>
+
+                <div className="text-center">
+                  <p className="text-muted mb-0">
+                    Already have an account?{" "}
+                    <Link to="/login" className="text-primary fw-semibold text-decoration-none">Sign in</Link>
+                  </p>
+                </div>
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
