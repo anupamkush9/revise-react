@@ -52,3 +52,6 @@ api.interceptors.response.use(
 );
 
 export default api;
+
+// axios interceptors docs or ref:
+// https://www.npmjs.com/package/axios#interceptors
