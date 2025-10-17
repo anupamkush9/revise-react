@@ -43,31 +43,33 @@ function Home() {
   return (
     <div>
       <h3>Welcome</h3>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "16px" }}>
+
+      {/* helper CSS to get 5 equal columns on wide screens; falls back responsively */}
+      <style>{`
+        .col-5th { flex: 0 0 20%; max-width: 20%; padding-left: 0.5rem; padding-right: 0.5rem; }
+        @media (max-width: 1199.98px) { .col-5th { flex: 0 0 25%; max-width: 25%; } } /* 4 cols */
+        @media (max-width: 991.98px)  { .col-5th { flex: 0 0 33.333%; max-width: 33.333%; } } /* 3 cols */
+        @media (max-width: 767.98px)  { .col-5th { flex: 0 0 50%; max-width: 50%; } } /* 2 cols */
+        @media (max-width: 575.98px)  { .col-5th { flex: 0 0 100%; max-width: 100%; } } /* 1 col */
+      `}</style>
+
+      <div className="row g-3" style={{ marginLeft: "-0.5rem", marginRight: "-0.5rem" }}>
         {items.map((blog) => (
-          <div
-            key={blog.id}
-            style={{
-              border: "1px solid #ccc",
-              borderRadius: "8px",
-              padding: "16px",
-              width: "300px",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-              background: "#fff",
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <img
-              src={blog.image || PLACEHOLDER}
-              alt={blog.title || "blog image"}
-              style={{ width: "100%", height: "180px", objectFit: "cover", borderRadius: "4px", marginBottom: 12 }}
-            />
-            <h4 style={{ margin: "0 0 8px 0" }}>{blog.title}</h4>
-            {/* <div style={{ flex: 1, marginBottom: 12 }} dangerouslySetInnerHTML={{ __html: blog.Description || "" }} /> */}
-            <p style={{ color: "#888", fontSize: "0.9em", margin: 0 }}>
-              {blog.date ? new Date(blog.date).toLocaleDateString() : ""}
-            </p>
+          <div key={blog.id} className="col-5th">
+            <div className="card h-100">
+              <img
+                src={blog.image || PLACEHOLDER}
+                className="card-img-top"
+                alt={blog.title || "blog image"}
+                style={{ height: 180, objectFit: "cover" }}
+              />
+              <div className="card-body d-flex flex-column">
+                <h5 className="card-title" style={{ marginBottom: 8 }}>{blog.title}</h5>
+                <p className="text-muted mt-auto mb-0" style={{ fontSize: 14 }}>
+                  {blog.date ? new Date(blog.date).toLocaleDateString() : ""}
+                </p>
+              </div>
+            </div>
           </div>
         ))}
       </div>
