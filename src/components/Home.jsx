@@ -1,5 +1,6 @@
 // src/Profile.js
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router";
 import api from "./api";
 
 function Home() {
@@ -56,20 +57,22 @@ function Home() {
       <div className="row g-3" style={{ marginLeft: "-0.5rem", marginRight: "-0.5rem" }}>
         {items.map((blog) => (
           <div key={blog.id} className="col-5th">
-            <div className="card h-100">
-              <img
-                src={blog.image || PLACEHOLDER}
-                className="card-img-top"
-                alt={blog.title || "blog image"}
-                style={{ height: 180, objectFit: "cover" }}
-              />
-              <div className="card-body d-flex flex-column">
-                <h5 className="card-title" style={{ marginBottom: 8 }}>{blog.title}</h5>
-                <p className="text-muted mt-auto mb-0" style={{ fontSize: 14 }}>
-                  {blog.date ? new Date(blog.date).toLocaleDateString() : ""}
-                </p>
+            <Link to={`/blogs/${blog.id}`} className="text-decoration-none text-reset">
+              <div className="card h-100">
+                <img
+                  src={blog.image || PLACEHOLDER}
+                  className="card-img-top"
+                  alt={blog.title || "blog image"}
+                  style={{ height: 180, objectFit: "cover" }}
+                />
+                <div className="card-body d-flex flex-column">
+                  <h5 className="card-title" style={{ marginBottom: 8 }}>{blog.title}</h5>
+                  <p className="text-muted mt-auto mb-0" style={{ fontSize: 14 }}>
+                    {blog.date ? new Date(blog.date).toLocaleDateString() : ""}
+                  </p>
+                </div>
               </div>
-            </div>
+            </Link>
           </div>
         ))}
       </div>

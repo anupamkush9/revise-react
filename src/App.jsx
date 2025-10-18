@@ -4,7 +4,8 @@ import ProtectedRoute from './components/ProtectedRoute';
 import './App.css';
 import Home from './components/Home';
 import Navbar from './components/Navbar';
-import Signup from './components/Signup'; // new component
+import BlogDetail from './components/BlogDetail';
+import Signup from './components/Signup';
 
 function App() {
   return (
@@ -23,13 +24,21 @@ function AppContent() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route 
-          path="/" 
+        <Route
+          path="/blogs/:id"
+          element={
+            <ProtectedRoute>
+              <BlogDetail />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/"
           element={
             <ProtectedRoute>
               <Home />
             </ProtectedRoute>
-          } 
+          }
         />
       </Routes>
     </div>
