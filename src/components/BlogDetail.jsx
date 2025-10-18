@@ -8,6 +8,7 @@ function BlogDetail() {
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     const fetchDetail = async () => {
@@ -24,6 +25,21 @@ function BlogDetail() {
     };
     fetchDetail();
   }, [id]);
+
+  const handleDelete = async () => {
+    if (!window.confirm("Are you sure you want to delete this blog?")) return;
+    setDeleting(true);
+    try {
+      await api.delete(`/api/blogs/${id}/`);
+      // optionally show a toast here
+      navigate("/");
+    } catch (err) {
+      console.error("Delete failed:", err);
+      setError("Failed to delete blog.");
+    } finally {
+      setDeleting(false);
+    }
+  };
 
   if (loading) return <p>Loading...</p>;
   if (error) return <div className="alert alert-danger">{error}</div>;
@@ -43,7 +59,19 @@ function BlogDetail() {
           />
         )}
         <div className="card-body">
-          <h2 className="card-title">{blog.title}</h2>
+          <div className="d-flex justify-content-between align-items-start mb-3">
+            <h2 className="card-title mb-0">{blog.title}</h2>
+            <div>
+              <button
+                className="btn btn-danger btn-sm"
+                onClick={handleDelete}
+                disabled={deleting}
+              >
+                {deleting ? "Deleting..." : "Delete"}
+              </button>
+            </div>
+          </div>
+
           <p className="text-muted">
             {blog.date ? new Date(blog.date).toLocaleString() : ""}
           </p>
