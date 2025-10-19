@@ -34,15 +34,22 @@ function Navbar() {
             <li className="nav-item">
               <Link className="nav-link" to="/">Home</Link>
             </li>
+            {isAuth && (
+              <li className="nav-item">
+                <Link className="nav-link" to="/blogs/add">Add Blog</Link>
+              </li>
+            )}
             {!isAuth && (
               <li className="nav-item">
                 <Link className="nav-link" to="/login">Login</Link>
               </li>
             )}
           </ul>
-          <button className="btn btn-outline-danger" type="button" onClick={handleLogout}>
-            Logout
-          </button>
+          {isAuth && (
+            <button className="btn btn-outline-danger" type="button" onClick={handleLogout}>
+              Logout
+            </button>
+          )}
         </div>
       </div>
     </nav>

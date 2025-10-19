@@ -6,6 +6,7 @@ import Home from './components/Home';
 import Navbar from './components/Navbar';
 import BlogDetail from './components/BlogDetail';
 import Signup from './components/Signup';
+import AddBlog from './components/AddBlog';
 
 function App() {
   return (
@@ -29,6 +30,14 @@ function AppContent() {
           element={
             <ProtectedRoute>
               <BlogDetail />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/blogs/add"
+          element={
+            <ProtectedRoute>
+              <AddBlog />
             </ProtectedRoute>
           }
         />
