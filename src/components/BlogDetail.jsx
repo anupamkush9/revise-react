@@ -140,6 +140,29 @@ function BlogDetail() {
     }
   };
 
+    const getImageUrl = (img) => {
+    if (!img || typeof img !== "string") return null;
+    if (img.startsWith("blob:")) return img;
+    if (img.startsWith("http://") || img.startsWith("https://")) return img;
+    if (img.startsWith("/")) return `http://localhost:8000${img}`; // adjust origin if needed
+    return null;
+  };
+
+  // render Description: if contains HTML render as HTML, otherwise preserve paragraphs/line breaks
+  const renderDescription = (desc) => {
+    if (!desc) return null;
+    const isHtml = /<\/?[a-z][\s\S]*>/i.test(desc);
+    if (isHtml) return <div dangerouslySetInnerHTML={{ __html: desc }} />;
+    return desc
+      .split(/\n\s*\n/)
+      .map((para, i) => (
+        <p key={i}>
+          {para.split(/\n/).reduce((acc, line, idx) => (idx === 0 ? [line] : [...acc, <br key={idx} />, line]), [])}
+        </p>
+      ));
+  };
+
+
   if (loading) return <p>Loading...</p>;
   if (error) return <div className="alert alert-danger">{error}</div>;
   if (!blog) return <p>No blog found.</p>;
@@ -149,12 +172,13 @@ function BlogDetail() {
       <button className="btn btn-link mb-3" onClick={() => navigate(-1)}>← Back</button>
 
       <div className="card">
-        {blog.image && !editMode && (
+        {getImageUrl(blog.image) && !editMode && (
           <img
-            src={blog.image}
+            src={getImageUrl(blog.image)}
             className="card-img-top"
             alt={blog.title}
             style={{ maxHeight: 420, objectFit: "cover" }}
+            onError={(e) => { e.currentTarget.style.display = "none"; }}
           />
         )}
 
@@ -177,10 +201,11 @@ function BlogDetail() {
                 </div>
               </div>
 
-              <p className="text-muted">
-                {blog.date ? new Date(blog.date).toLocaleString() : ""}
+              <p className="text-muted mb-3">
+                Created: {blog.created_at ? new Date(blog.created_at).toLocaleString() : "—"}
+                {blog.updated_at && <span className="ms-3">Updated: {new Date(blog.updated_at).toLocaleString()}</span>}
               </p>
-              <div dangerouslySetInnerHTML={{ __html: blog.Description || "" }} />
+              {renderDescription(blog.Description)}
             </>
           ) : (
             <>
@@ -196,21 +221,11 @@ function BlogDetail() {
                 </div>
               </div>
 
-              {/* Image preview when present */}
-              {editForm.image ? (
-                <img
-                  src={editForm.image}
-                  alt="preview"
-                  className="mb-3"
-                  style={{ width: "100%", maxHeight: 300, objectFit: "cover", borderRadius: 6 }}
-                />
-              ) : blog.image ? (
-                <img
-                  src={blog.image}
-                  alt="preview"
-                  className="mb-3"
-                  style={{ width: "100%", maxHeight: 300, objectFit: "cover", borderRadius: 6 }}
-                />
+              {/* Image preview when present (prefer local previewUrl, otherwise backend image) */}
+              {previewUrl ? (
+                <img src={previewUrl} alt="preview" className="mb-3" style={{ width: "100%", maxHeight: 300, objectFit: "cover", borderRadius: 6 }} />
+              ) : getImageUrl(editForm.image) ? (
+                <img src={getImageUrl(editForm.image)} alt="preview" className="mb-3" style={{ width: "100%", maxHeight: 300, objectFit: "cover", borderRadius: 6 }} onError={(e)=>{ e.currentTarget.style.display='none'; }} />
               ) : null}
 
               <div className="mb-3">
