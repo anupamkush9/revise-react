@@ -7,6 +7,7 @@ import Navbar from './components/Navbar';
 import BlogDetail from './components/BlogDetail';
 import Signup from './components/Signup';
 import AddBlog from './components/AddBlog';
+import NotFound from './components/NotFound';
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function AppContent() {
             </ProtectedRoute>
           }
         />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );
