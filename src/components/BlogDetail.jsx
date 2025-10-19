@@ -81,11 +81,10 @@ function BlogDetail() {
         const fd = new FormData();
         fd.append("title", editForm.title);
         fd.append("Description", editForm.Description);
-        // append file under expected field name e.g. "image"
+        // append the File object (not the preview URL/string)
         fd.append("image", editFile);
-        resp = await api.patch(`/api/blogs/${id}/`, fd, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
+        // Let axios/browser set Content-Type (with boundary) automatically
+        resp = await api.patch(`/api/blogs/${id}/`, fd);
       } else {
         const payload = {
           title: editForm.title,
@@ -226,14 +225,6 @@ function BlogDetail() {
               </div>
 
               <div className="mb-3">
-                <label className="form-label">Image URL / Path</label>
-                <input
-                  name="image"
-                  className={`form-control ${formErrors.image ? "is-invalid" : ""}`}
-                  value={editForm.image}
-                  onChange={handleEditChange}
-                  placeholder="http://... or /media/..."
-                />
                 {formErrors.image && <div className="invalid-feedback">{formErrors.image}</div>}
                 <div className="form-text mt-2">Or upload a file:</div>
                 <input type="file" accept="image/*" className="form-control mt-2" onChange={handleFileChange} />
