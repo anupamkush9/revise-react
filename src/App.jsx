@@ -22,6 +22,15 @@ function App() {
     setTodoItems(newTodoItems);
   };
 
+  const handleEditItem = (updatedItem) => {
+    const newTodoItems = todoItems.map((item) =>
+      item.name === updatedItem.oldName
+        ? { name: updatedItem.newName, dueDate: updatedItem.newDate }
+        : item
+    );
+    setTodoItems(newTodoItems);
+  };
+
   return (
     <center className="todo-container">
       <AppName />
@@ -30,6 +39,7 @@ function App() {
       <TodoItems
         todoItems={todoItems}
         onDeleteClick={handleDeleteItem}
+        onEditClick={handleEditItem}
       ></TodoItems>
     </center>
   );
