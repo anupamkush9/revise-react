@@ -8,18 +8,28 @@ function Home() {
   const [loading, setLoading] = useState(false);
   const [nextUrl, setNextUrl] = useState(null);
   const [pageInfo, setPageInfo] = useState({ page: 1, total_pages: 1, count: 0 });
+  const [fetchedIds, setFetchedIds] = useState(new Set()); // Track unique blog IDs
 
   const PLACEHOLDER =
     "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='360'%3E%3Crect width='100%25' height='100%25' fill='%23f3f4f6'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23999' font-family='Arial' font-size='20'%3ENo image%3C/text%3E%3C/svg%3E";
 
   const fetchPage = async (url = "/api/blogs/") => {
+    if (loading) return; // Prevent duplicate API calls
     setLoading(true);
     try {
       const response = await api.get(url);
       const payload = response.data || {};
       const results = Array.isArray(payload.results) ? payload.results : [];
-      // append new results
-      setItems((prev) => [...prev, ...results]);
+      const uniqueResults = results.filter((blog) => !fetchedIds.has(blog.id)); // Filter duplicates
+
+      // Update state with unique blogs
+      setItems((prev) => [...prev, ...uniqueResults]);
+      setFetchedIds((prev) => {
+        const newIds = new Set(prev);
+        uniqueResults.forEach((blog) => newIds.add(blog.id));
+        return newIds;
+      });
+
       setNextUrl(payload.next || null);
       setPageInfo({
         page: payload.page || 1,
