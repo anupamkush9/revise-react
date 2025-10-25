@@ -16,11 +16,8 @@ function Navbar() {
   }, []);
 
   const handleLogout = () => {
-    // Remove tokens from localStorage
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
-
-    // update local state and redirect to login page
     setIsAuth(false);
     navigate("/login");
   };
@@ -33,6 +30,9 @@ function Navbar() {
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <Link className="nav-link" to="/">Home</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/about">About</Link>
             </li>
             {isAuth && (
               <li className="nav-item">

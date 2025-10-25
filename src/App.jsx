@@ -8,6 +8,7 @@ import BlogDetail from './components/BlogDetail';
 import Signup from './components/Signup';
 import AddBlog from './components/AddBlog';
 import NotFound from './components/NotFound';
+import About from './components/About';
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function AppContent() {
             </ProtectedRoute>
           }
         />
+        <Route path="/about" element={<About />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
