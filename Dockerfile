@@ -20,6 +20,7 @@ RUN npm run build
 FROM nginx:alpine
 
 # Copy the built application from the previous stage
+# here we are replacing the default nginx html files with our built files
 COPY --from=build /app/dist /usr/share/nginx/html
 
 # Expose port 80
